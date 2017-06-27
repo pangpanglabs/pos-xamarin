@@ -42,6 +42,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\PosSDK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Spot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContentsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ContentsPage.xaml.cs">
+      <DependentUpon>ContentsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ApiResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Content.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sku.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SkusViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SkusPage.xaml.cs">
+      <DependentUpon>SkusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ContentDetailPage.xaml.cs">
+      <DependentUpon>ContentDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContentDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
@@ -50,5 +65,14 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LoginPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\NewItemPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ContentsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SkusPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ContentDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

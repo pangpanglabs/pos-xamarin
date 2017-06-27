@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Pos.Services;
+using Pos.Views;
 using Xamarin.Forms;
 
 namespace Pos
@@ -17,18 +18,18 @@ namespace Pos
 
         public static void SetMainPage()
         {
-            //if (!Settings.IsLoggedIn)
-            //{
+            if (!Settings.IsLoggedIn)
+            {
                 Current.MainPage = new NavigationPage(new LoginPage())
                 {
                     BarBackgroundColor = (Color)Current.Resources["Primary"],
                     BarTextColor = Color.White
                 };
-            //}
-            //else
-            //{
-            //    GoToMainPage();
-            //}
+            }
+            else
+            {
+                GoToMainPage();
+            }
         }
 
         public static void GoToMainPage()
@@ -36,9 +37,9 @@ namespace Pos
             Current.MainPage = new TabbedPage
             {
                 Children = {
-                    new NavigationPage(new ItemsPage())
+                    new NavigationPage(new ContentsPage())
                     {
-                        Title = "Browse",
+                        Title = "Catalog",
                         Icon = Device.OnPlatform("tab_feed.png", null, null)
                     },
                     new NavigationPage(new AboutPage())

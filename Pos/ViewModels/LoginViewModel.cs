@@ -7,7 +7,6 @@ namespace Pos.ViewModels
 {
 	public class LoginViewModel : BaseViewModel
 	{
-		PosSDK posSDK => DependencyService.Get<PosSDK>();
 		public LoginViewModel()
 		{
 			SignInCommand = new Command(async () => await SignIn());
@@ -65,7 +64,7 @@ namespace Pos.ViewModels
 
 		public async Task<bool> TryLoginAsync()
 		{
-			var result = await posSDK.CallAPI<Models.Account>("/account/login", new
+			var result = await PosSDK.CallAPI<Models.Account>("/account/login", new
 			{
 				tenant = this.Tenant,
 				username = this.Username,

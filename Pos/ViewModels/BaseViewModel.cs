@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Pos.Services;
+using Xamarin.Forms;
 
 namespace Pos
 {
@@ -7,6 +8,7 @@ namespace Pos
         /// <summary>
         /// Get the azure service instance
         /// </summary>
+        protected PosSDK PosSDK => DependencyService.Get<PosSDK>();
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         bool isBusy = false;

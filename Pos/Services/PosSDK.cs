@@ -1,32 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
+using Pos.Models;
 
 namespace Pos.Services
 {
-	public class Error
-	{
-		public int Code { get; set; }
-		public string Message { get; set; }
-	}
-
-	public class ItemResult<T>
-	{
-		public int TotalCount { get; set; }
-		public IEnumerable<T> Items { get; set; }
-	}
-
-	public class ApiResult<T>
-	{
-		public T Result { get; set; }
-		public bool Success { get; set; }
-		public Error Error { get; set; }
-	}
-
 	public class PosSDK
 	{
 		HttpClient client;
@@ -37,7 +20,7 @@ namespace Pos.Services
 			client.BaseAddress = new Uri("https://staging.p2shop.cn/");
 		}
 
-        public async Task<ApiResult<T>> CallAPI<T>(string path, dynamic param)
+        public async Task<ApiResult<T>> CallAPI<T>(string path, dynamic param = null)
         {
             if (CrossConnectivity.Current.IsConnected == false)
             {
@@ -52,20 +35,31 @@ namespace Pos.Services
                 };
             }
 
-            var uri = "jan-api" + path + "?";
-            StringBuilder sb = new StringBuilder();
-            foreach (var p in param.GetType().GetProperties())
+            var uri = "jan-api-retail" + path + "?";
+
+            if (param != null)
             {
-                uri += $"{p.Name}={p.GetValue(param)}&";
+                foreach (var p in param.GetType().GetProperties())
+                {
+                    uri += $"{p.Name}={p.GetValue(param)}&";
+                }
             }
 
             try
-            {                
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.AuthToken);
                 using (HttpResponseMessage response = await client.GetAsync(uri))
                 using (HttpContent content = response.Content)
                 {
                     string json = await content.ReadAsStringAsync();
-                    return await Task.Run(() => JsonConvert.DeserializeObject<ApiResult<T>>(json));
+                    var result = await Task.Run(() => JsonConvert.DeserializeObject<ApiResult<T>>(json));
+
+                    if (path.StartsWith("/account/login"))
+                    {
+                        Settings.AuthToken = (result.Result as Account).Token;
+                    }
+
+                    return result;
                 }
             }
             catch (Exception e)
