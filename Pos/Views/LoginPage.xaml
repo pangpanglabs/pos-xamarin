@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:Pos.ViewModels;" x:Class="Pos.LoginPage" Title="AppName">
+	<ContentPage.BindingContext>
+		<vm:LoginViewModel />
+	</ContentPage.BindingContext>
+	<ScrollView>
+		<Grid Padding="20,40,20,20" ColumnSpacing="10" RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Text="Tenant:" HorizontalOptions="End" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Tenant}" FontSize="Medium" />
+            <Label Grid.Row="1" Grid.Column="0" Text="Username:" HorizontalOptions="End" />
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Username}" FontSize="Medium" />
+            <Label Grid.Row="2" Grid.Column="0" Text="Password:" HorizontalOptions="End" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Password}" FontSize="Medium" />          
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Sign In" Command="{Binding SignInCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsNotBusy}" TextColor="White" BackgroundColor="{StaticResource Primary}" />
+            <StackLayout Grid.Row="4" Grid.ColumnSpan="2" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                    <ActivityIndicator.Color>
+                        <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}" />
+                    </ActivityIndicator.Color>
+                </ActivityIndicator>
+                <Label Text="{Binding Message}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+            </StackLayout>
+        </Grid>
+	</ScrollView>
+</ContentPage>
