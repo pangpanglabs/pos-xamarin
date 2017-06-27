@@ -9,7 +9,6 @@ namespace Pos
         /// Get the azure service instance
         /// </summary>
         protected PosSDK PosSDK => DependencyService.Get<PosSDK>();
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         bool isBusy = false;
         public bool IsBusy

@@ -11,7 +11,6 @@ namespace Pos
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             DependencyService.Register<PosSDK>();
             SetMainPage();
         }
