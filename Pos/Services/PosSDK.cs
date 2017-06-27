@@ -54,9 +54,13 @@ namespace Pos.Services
                     string json = await content.ReadAsStringAsync();
                     var result = await Task.Run(() => JsonConvert.DeserializeObject<ApiResult<T>>(json));
 
-                    if (path.StartsWith("/account/login"))
+                    if (path.StartsWith("/account") && result.Success)
                     {
-                        Settings.AuthToken = (result.Result as Account).Token;
+                        var account = result.Result as Models.Account;
+                        if (account != null)
+                        {
+                            Settings.AuthToken = account.Token;
+                        }
                     }
 
                     return result;
