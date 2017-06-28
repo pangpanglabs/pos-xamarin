@@ -18,10 +18,10 @@ var result = await PosSDK.CallAPI<Account>("/account/login", new
 });
 if (result.Success == true)
 {
-        /* success */
+    /* success */
 }
 else
 {
-        /* fail */
+    /* fail */
 {
 ```
