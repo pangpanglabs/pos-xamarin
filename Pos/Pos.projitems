@@ -9,6 +9,7 @@
     <Import_RootNamespace>Pos</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ImageButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableRangeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
@@ -16,10 +17,25 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IndexPage.xaml.cs">
+      <DependentUpon>IndexPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IndexPageDetail.xaml.cs">
+      <DependentUpon>IndexPageDetail.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IndexPageMaster.xaml.cs">
+      <DependentUpon>IndexPageMaster.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IndexPageMenuItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\LoginPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -29,38 +45,57 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Spot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContentsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ContentsPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\ContentsPage.xaml.cs">
       <DependentUpon>ContentsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\ApiResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Content.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Sku.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SkusViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\SkusPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\SkusPage.xaml.cs">
       <DependentUpon>SkusPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ContentDetailPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\ContentDetailPage.xaml.cs">
       <DependentUpon>ContentDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContentDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LoginPage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sample\AboutPage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sample\LoginPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ContentsPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sample\ContentsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SkusPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sample\SkusPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ContentDetailPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sample\ContentDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Sample\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Sales\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Login\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Return\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IndexPageMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IndexPageDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
