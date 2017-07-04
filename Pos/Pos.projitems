@@ -14,9 +14,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableRangeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessagingCenterAlert.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -29,7 +30,44 @@
       <DependentUpon>IndexPageMaster.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\IndexPageMenuItem.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Return\PartReturnOrderPaymentPage.xaml.cs">
+      <DependentUpon>PartReturnOrderPaymentPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Return\PartReturnProductsPage.xaml.cs">
+      <DependentUpon>PartReturnProductsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Return\ReturnOrderPaymentPage.xaml.cs">
+      <DependentUpon>ReturnOrderPaymentPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Return\ReturnOrderProductsPage.xaml.cs">
+      <DependentUpon>ReturnOrderProductsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Return\ReturnOrderSearchPage.xaml.cs">
+      <DependentUpon>ReturnOrderSearchPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\CartPage.xaml.cs">
+      <DependentUpon>CartPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\CatalogPage.xaml.cs">
+      <DependentUpon>CatalogPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\Payment\CashPaymentPage.xaml.cs">
+      <DependentUpon>CashPaymentPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\PayPreparePage.xaml.cs">
+      <DependentUpon>PayPreparePage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\ProductAddPage.xaml.cs">
+      <DependentUpon>ProductAddPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\AboutPage.xaml.cs">
@@ -44,21 +82,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\PosSDK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Spot.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContentsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\ContentsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\ContentsPage.xaml.cs">
       <DependentUpon>ContentsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\ApiResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Content.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Sku.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SkusViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\SkusViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\SkusPage.xaml.cs">
       <DependentUpon>SkusPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Sample\ContentDetailPage.xaml.cs">
       <DependentUpon>ContentDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContentDetailViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\ContentDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sample\AboutPage.xaml" />
@@ -75,10 +113,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Sample\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Sample\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Views\Sales\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Login\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Views\Return\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IndexPage.xaml">
@@ -94,6 +131,66 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IndexPageDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sales\CatalogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sales\CartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sales\PayPreparePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sales\ProductAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sales\Payment\CashPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Return\ReturnOrderSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Return\ReturnOrderProductsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Return\ReturnOrderPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Return\PartReturnProductsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Return\PartReturnOrderPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

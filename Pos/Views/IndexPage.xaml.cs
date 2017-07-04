@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Pos.Models;
+using Pos.Views.Return;
+using Pos.Views.Sales;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,13 +23,25 @@ namespace Pos.Views
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as IndexPageMenuItem;
+            var item = e.SelectedItem as Content;
             if (item == null)
                 return;
-
-            var page = (Page)Activator.CreateInstance(item.TargetType);
-            page.Title = item.Title;
-
+            //ToBe:根据点击的item，创建相应的页面
+            Page page = null;
+            switch (item.Code)
+            {
+                case "home":
+                    page = (Page)Activator.CreateInstance(typeof(IndexPageDetail));
+                    break;
+                case "sale":
+                    page = (Page)Activator.CreateInstance(typeof(CatalogPage));
+                    break;
+                case "return":
+                    page = (Page)Activator.CreateInstance(typeof(ReturnOrderSearchPage));
+                    break;
+                default:
+                    break;
+            }
             Detail = new NavigationPage(page);
             IsPresented = false;
 
