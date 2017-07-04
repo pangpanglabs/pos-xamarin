@@ -25,5 +25,3 @@ else
     /* fail */
 {
 ```
-
-Try it!!
