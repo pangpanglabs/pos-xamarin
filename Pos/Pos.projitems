@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableRangeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessagingCenterAlert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Cart.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IndexViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
