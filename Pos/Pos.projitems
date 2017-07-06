@@ -16,6 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessagingCenterAlert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Cart.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CardViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CartViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CashViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CatalogViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\PayPrepareViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\LoginViewModel.cs" />
@@ -116,7 +121,6 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Sample\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Sample\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IndexPage.xaml">

@@ -26,7 +26,7 @@ namespace Pos.ViewModels
 			IsBusy = true;
 
 			try
-			{				
+			{	
 				var result = await PosSDK.CallAPI<Content>("/catalog/get-content", new { id = contentId });
                 //Skus = new ObservableRangeCollection<Sku>(result.Result.Skus);
 				Skus.ReplaceRange(result.Result.Skus);
