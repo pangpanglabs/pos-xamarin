@@ -10,7 +10,6 @@ namespace Pos.ViewModels.Sale.Payment
     public class CashPaymentViewModel : BaseViewModel
     {
         public Command CashPayCommand { get; set; }
-
         public CashPaymentViewModel()
         {
             Title = "Cash";
@@ -28,6 +27,7 @@ namespace Pos.ViewModels.Sale.Payment
             if (result.Success == true)
             {
                 MessagingCenter.Send<Cart>(result.Result, "PaymentStart");
+                MessagingCenter.Send<object>(this, "CahsPayComplete");
             }
         }
         private string _cartId;

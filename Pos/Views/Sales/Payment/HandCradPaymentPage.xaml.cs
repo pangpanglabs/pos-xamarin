@@ -21,5 +21,19 @@ namespace Pos.Views.Sales.Payment
 		{
             BindingContext = viewModel;
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Subscribe<object>(this, "HandCardPayComplete", (s) => {
+                Navigation.RemovePage(this);
+            });
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<object>(this, "HandCardPayComplete");
+        }
+    }
 }

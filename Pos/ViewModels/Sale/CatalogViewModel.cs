@@ -29,8 +29,10 @@ namespace Pos.ViewModels.Sale
             LoginCmd = new Command(async () => await SignIn());
         }
 
-        public Sku CurrentContent {
-            get {
+        public Sku CurrentContent
+        {
+            get
+            {
                 return currentContent;
             }
             set
@@ -39,7 +41,8 @@ namespace Pos.ViewModels.Sale
                 {
                     AddContentToCart((Sku)value);
                 }
-                else {
+                else
+                {
                     CreateNewCart((Sku)value);
                 }
             }
@@ -67,7 +70,8 @@ namespace Pos.ViewModels.Sale
 
         }
 
-        async Task CreateNewCart(Sku item) {
+        async Task CreateNewCart(Sku item)
+        {
             var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
             currentCart = result.Result;
 
@@ -76,7 +80,8 @@ namespace Pos.ViewModels.Sale
             MessagingCenter.Send<Cart>(currentCart, "NewCart");
         }
 
-        async Task AddContentToCart(Sku item) {
+        async Task AddContentToCart(Sku item)
+        {
             var result = await PosSDK.CallAPI<Cart>("/cart/add-item", new
             {
                 cartId = currentCart.Id,
@@ -87,7 +92,8 @@ namespace Pos.ViewModels.Sale
             MessagingCenter.Send<Cart>(currentCart, "NewCart");
         }
 
-        async Task RemoveContentFromCart(Sku item) {
+        async Task RemoveContentFromCart(Sku item)
+        {
             var result = await PosSDK.CallAPI<Cart>("/cart/remove-item", new
             {
                 cartId = currentCart.Id,

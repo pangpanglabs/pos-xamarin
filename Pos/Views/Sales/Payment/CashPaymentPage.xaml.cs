@@ -17,9 +17,23 @@ namespace Pos.Views.Sales.Payment
         {
             InitializeComponent();
         }
-        public CashPaymentPage (CashPaymentViewModel viewModel):this()
+        public CashPaymentPage(CashPaymentViewModel viewModel):this()
 		{
             BindingContext = viewModel;
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Subscribe<object>(this, "CahsPayComplete", (s) => {
+                Navigation.RemovePage(this);
+            });
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<object>(this, "CahsPayComplete");
+        }
+    }
 }

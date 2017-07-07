@@ -13,14 +13,14 @@ namespace Pos.ViewModels.Sale
             MessagingCenter.Subscribe<Cart>(this, "SendCart", (c) => {
                 CurrentCart = c;
             });
-            MessagingCenter.Subscribe<CartItem>(this, "DeletecartItem", async(i)=> {
+            MessagingCenter.Subscribe<CartItem>(this, "DeletecartItem", async (i) => {
                 ApiResult<Cart> cartResult = await PosSDK.CallAPI<Cart>("/cart/remove-item", new
                 {
                     cartId = CartId,
                     skuId = i.Sku.Id,
                     quantity = i.Quantity
                 });
-                if (cartResult.Success==true)
+                if (cartResult.Success == true)
                 {
                     CurrentCart = cartResult.Result;
                 }
