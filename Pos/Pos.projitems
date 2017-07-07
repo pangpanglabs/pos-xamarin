@@ -20,6 +20,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CartViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CashViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CatalogViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\Payment\CashPaymentViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\Payment\HandCardPaymentViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\PayPrepareViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sample\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
@@ -66,6 +68,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\Payment\CashPaymentPage.xaml.cs">
       <DependentUpon>CashPaymentPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\Payment\HandCradPaymentPage.xaml.cs">
+      <DependentUpon>HandCradPaymentPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Sales\PayPreparePage.xaml.cs">
@@ -196,6 +202,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Return\PartReturnOrderPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Sales\Payment\HandCradPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
