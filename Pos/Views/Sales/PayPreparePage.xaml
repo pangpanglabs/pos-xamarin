@@ -4,11 +4,78 @@
              x:Class="Pos.Views.Sales.PayPreparePage"
              xmlns:vm="clr-namespace:Pos.ViewModels.Sale">
     <ContentPage.BindingContext>
-        <vm:PayPrepareViewModel />
     </ContentPage.BindingContext>
+
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+
+            <StackLayout Orientation="Vertical" >
+                <Label Text="{Binding CurrentCart.SalePrice, StringFormat='{0:C2}'}"
+             FontSize="Large"
+             FontAttributes="Bold"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+                <StackLayout Orientation="Horizontal"  HorizontalOptions="CenterAndExpand">
+                    <Label Text="已付:"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="End"/>
+                    <Label Text="{Binding PayAmt, StringFormat='{0:C2}'}"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="End"/>
+                    <Label Text="剩余:"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            TextColor="Red"/>
+                    <Label Text="{Binding RemainAmt, StringFormat='{0:C2}'}"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            TextColor="Red"/>
+                </StackLayout>
+            </StackLayout>
+
+            <!--<StackLayout Padding="2,2,2,2" VerticalOptions="Start" Orientation="Horizontal" HeightRequest="45" HorizontalOptions="FillAndExpand">
+                <Label Text="营业员:" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" FontSize="15"></Label>
+                <control:ListPicker Title="营业员" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemsSource="{Binding Employees}"  SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"/>
+            </StackLayout>-->
+            <ListView ItemsSource="{Binding PaymentInfos}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout  Orientation="Horizontal" Padding="10,10,10,10">
+                                <Label Text="{Binding Method}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" />
+                                <Label Text="{Binding Amount, StringFormat='{0:C2}'}" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Grid x:Name="paymentGrid" RowSpacing="5" ColumnSpacing="5" VerticalOptions="CenterAndExpand" Padding="5" >
+                    <!--          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Button HeightRequest="40" Text="1" Grid.Row="0" Grid.Column="0" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="0" Grid.Column="1" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="0" Grid.Column="2" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="0" Grid.Column="3" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="1" Grid.Column="0" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="1" Grid.Column="1" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="1" Grid.Column="2" Style="{StaticResource plainButton}" ></Button>
+          <Button HeightRequest="40" Text="1" Grid.Row="1" Grid.Column="3" Style="{StaticResource plainButton}" ></Button>-->
+                </Grid>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
