@@ -1,10 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Pos.ViewModels.Sale" Title="Catelog"
+             xmlns:control="clr-namespace:Pos.Controls"
              x:Class="Pos.Views.Sales.CatalogPage">
+    <ContentPage.BindingContext>
+        <vm:CatalogViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+        <StackLayout Padding="5">
+            <StackLayout Orientation="Horizontal" >
+                <SearchBar x:Name="productSearchBar" Placeholder="查询" Text="{Binding SearchText}" 
+                     SearchCommand="{Binding searchProductCommand}"
+                     HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" >
+                </SearchBar>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="登陆" Command="{Binding LoginCmd}" HorizontalOptions="StartAndExpand"></Button>
+                <Button Text="跳转到购物车" Command="{Binding GoToCartPage}" HorizontalOptions="EndAndExpand"></Button>
+            </StackLayout>
+            <StackLayout>
+                <ListView x:Name="productListView"
+                    ItemsSource="{Binding Contents}"
+                    SelectedItem="{Binding CurrentContent}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout  Orientation="Vertical" Padding="10,0" HorizontalOptions="FillAndExpand">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Id}" HorizontalOptions="Start" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Code}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                                        <StackLayout HorizontalOptions="EndAndExpand">
+                                            <Label Text="{Binding SalePrice}" VerticalOptions="Start" HorizontalOptions="End"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding Name}" HorizontalOptions="Start"  />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
