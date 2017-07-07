@@ -2,6 +2,7 @@
 using Pos.Services;
 using Pos.Views;
 using Xamarin.Forms;
+using Pos.ViewModels;
 
 namespace Pos
 {
@@ -10,11 +11,18 @@ namespace Pos
         public static int ScreenWidth { get; set; }
         public static int ScreenHeight { get; set; }
 
+        public static ViewModelLocator ViewModelLocator;
+
         public App()
         {
             InitializeComponent();
 
+            ViewModelLocator = new ViewModelLocator();
+
             DependencyService.Register<PosSDK>();
+            Current.Resources = new ResourceDictionary();
+            Current.Resources.Add("Locator", new ViewModelLocator());
+
             SetMainPage();
         }
 

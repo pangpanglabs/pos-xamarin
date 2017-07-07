@@ -10,6 +10,7 @@ namespace Pos.ViewModels.Sale
 {
     public class PayPrepareViewModel : BaseViewModel
     {
+        public INavigation Navigation { get; set; }
         public PayPrepareViewModel(Cart cart)
         {
             CurrentCart = cart;

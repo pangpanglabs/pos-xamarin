@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pos.ViewModels.Sale
 {
-    class CartViewModel
+    public class CartViewModel
     {
     }
 }

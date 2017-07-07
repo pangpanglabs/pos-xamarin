@@ -1,4 +1,5 @@
-﻿using Pos.ViewModels.Sale;
+﻿using Pos.Models;
+using Pos.ViewModels.Sale;
 using Pos.ViewModels.Sale.Payment;
 using Pos.Views.Sales.Payment;
 using System;
@@ -23,11 +24,12 @@ namespace Pos.Views.Sales
         {
             InitializeComponent();
             CreatePaymentButton();
+            BindingContext = App.ViewModelLocator.PayPrepareViewModel;
         }
 
-        public PayPreparePage(PayPrepareViewModel viewModel):this()
+        public PayPreparePage(Cart cart) :this()
         {
-            BindingContext = _viewModel = viewModel;
+            App.ViewModelLocator.PayPrepareViewModel.CurrentCart = cart;
         }
 
         private void CreatePaymentButton()

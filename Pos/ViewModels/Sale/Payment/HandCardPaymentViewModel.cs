@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pos.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Pos.ViewModels.Sale.Payment
 
         async Task CreateHandCardPay()
         {
-            var result = await PosSDK.CallAPI<Models.Account>("/cart/set-payment", new
+            var result = await PosSDK.CallAPI<Cart>("/cart/set-payment", new
             {
                 cartId = CartId,
                 method = "HandCard",
@@ -26,7 +27,8 @@ namespace Pos.ViewModels.Sale.Payment
             });
             if (result.Success == true)
             {
-
+                MessagingCenter.Send<Cart>(result.Result, "PaymentStart");
+                MessagingCenter.Send<object>(null, "HandCardPayComplete");
             }
         }
         private string _cartId;
