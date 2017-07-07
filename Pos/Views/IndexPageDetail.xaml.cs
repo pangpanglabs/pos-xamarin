@@ -1,4 +1,5 @@
 ﻿using Pos.Controls;
+using Pos.Views.Sales;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -170,7 +171,7 @@ namespace Pos.Views
 
         private void GoSalePage()
         {
-            throw new NotImplementedException();
+            Navigation.PushAsync(new CatalogPage());
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Pos.Services
 		public PosSDK()
 		{
 			client = new HttpClient();
-			client.BaseAddress = new Uri("https://staging.p2shop.cn/");
+			client.BaseAddress = new Uri("http://staging.p2shop.cn:81/");
 		}
 
         public async Task<ApiResult<T>> CallAPI<T>(string path, dynamic param = null)
