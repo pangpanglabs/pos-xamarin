@@ -1,10 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Pos.Views.Sales.CartPage">
+             x:Class="Pos.Views.Sales.CartPage"
+             xmlns:vm="clr-namespace:Pos.ViewModels.Sale">
+    <ContentPage.BindingContext>
+        <vm:CartViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems IsBusy ="{Binding IsBusy}">
+        <ToolbarItem Text="支付"  Clicked="OnPayPrepareButtonClick"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+            <StackLayout Orientation="Vertical" >
+                <Label Text="{Binding CurrentCart.SalePrice, StringFormat='{0:C2}'}"
+             FontSize="Large"
+             FontAttributes="Bold"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+                <StackLayout Orientation="Horizontal"  HorizontalOptions="CenterAndExpand">
+                    <Label Text="原价:"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="End"/>
+                    <Label Text="{Binding CurrentCart.ListPrice, StringFormat='{0:C2}'}"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="End"/>
+                    <Label Text="折扣金额:"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            TextColor="Red"/>
+                    <Label Text="{Binding CurrentCart.Discount, StringFormat='{0:C2}'}"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            TextColor="Red"/>
+                </StackLayout>
+            </StackLayout>
+            <ListView ItemsSource="{Binding CartItems}" HasUnevenRows="true" BackgroundColor="Transparent" SelectedItem="{Binding SelectedItem}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+                   Text="删除" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <StackLayout  Orientation="Vertical" Padding="2,2,2,2">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Sku.Name}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                                    <Label Text="{Binding Sku.Brandcode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Sku.ListPrice, StringFormat='{0:C2}'}" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout  Orientation="Horizontal">
+                                        <Label Text="数量：" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding Quantity}" HorizontalOptions="Start"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding TotalDiscountAmt, StringFormat='{0:C2}'}" TextColor="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+                                    <Label Text="{Binding DiscountRate}" TextColor="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                        <Label Text="{Binding SubTotal, StringFormat='{0:C2}'}" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" TextColor="Red"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Padding="5" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand">
+                <Button HeightRequest="40" TextColor="White" Text="清空购物车"  BackgroundColor="#42947D"  Command="{Binding ClearOrderCommand}"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
