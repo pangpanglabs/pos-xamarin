@@ -7,6 +7,9 @@ namespace Pos
 {
     public partial class App : Application
     {
+        public static int ScreenWidth { get; set; }
+        public static int ScreenHeight { get; set; }
+
         public App()
         {
             InitializeComponent();

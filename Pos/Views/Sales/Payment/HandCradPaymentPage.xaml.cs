@@ -11,13 +11,13 @@ using Xamarin.Forms.Xaml;
 namespace Pos.Views.Sales.Payment
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CashPaymentPage : ContentPage
+	public partial class HandCradPaymentPage : ContentPage
 	{
-        public CashPaymentPage()
+        public HandCradPaymentPage()
         {
             InitializeComponent();
         }
-        public CashPaymentPage (CashPaymentViewModel viewModel):this()
+		public HandCradPaymentPage (HandCardPaymentViewModel viewModel):this()
 		{
             BindingContext = viewModel;
 		}

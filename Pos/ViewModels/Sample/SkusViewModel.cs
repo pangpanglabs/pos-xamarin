@@ -34,7 +34,7 @@ namespace Pos.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex);
-				MessagingCenter.Send(new MessagingCenterAlert
+                MessagingCenter.Send(new MessagingCenterAlert
 				{
 					Title = "Error",
 					Message = "Unable to load items.",
