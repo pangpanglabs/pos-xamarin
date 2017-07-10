@@ -38,10 +38,10 @@ namespace Pos.ViewModels
             SimpleIoc.Default.Register<CartViewModel>();
             SimpleIoc.Default.Register<CatalogViewModel>();
             SimpleIoc.Default.Register<ContentsViewModel>();
-            SimpleIoc.Default.Register<ContentDetailViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<SkusViewModel>();
             SimpleIoc.Default.Register<PayPrepareViewModel>();
+            SimpleIoc.Default.Register<IndexViewModel>();
         }
 
         public IndexViewModel IndexViewModel
@@ -111,7 +111,6 @@ namespace Pos.ViewModels
                 return ServiceLocator.Current.GetInstance<PayPrepareViewModel>();
             }
         }
-
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

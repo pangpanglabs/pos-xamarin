@@ -57,10 +57,9 @@
                                         <Label Text="数量：" HorizontalOptions="Start"/>
                                         <Label Text="{Binding Quantity}" HorizontalOptions="Start"/>
                                     </StackLayout>
-                                    <Label Text="{Binding TotalDiscountAmt, StringFormat='{0:C2}'}" TextColor="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
-                                    <Label Text="{Binding DiscountRate}" TextColor="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+                                    <Label Text="{Binding Discount, StringFormat='{0:C2}'}" TextColor="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                        <Label Text="{Binding SubTotal, StringFormat='{0:C2}'}" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" TextColor="Red"/>
+                                        <Label Text="{Binding SalePrice, StringFormat='{0:C2}'}" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" TextColor="Red"/>
                                     </StackLayout>
                                 </StackLayout>
                             </StackLayout>
@@ -68,9 +67,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout Padding="5" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand">
-                <Button HeightRequest="40" TextColor="White" Text="清空购物车"  BackgroundColor="#42947D"  Command="{Binding ClearOrderCommand}"></Button>
-            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

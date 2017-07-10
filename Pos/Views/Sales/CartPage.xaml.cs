@@ -24,13 +24,15 @@ namespace Pos.Views.Sales
         {
             this.cart = cart;
             MessagingCenter.Send<Cart>(cart, "SendCart");
+            MessagingCenter.Subscribe<Cart>(this,"ChangeCart",(c)=> {
+                cart=c;
+            });
         }
         public async void OnPayPrepareButtonClick(object sender, EventArgs args)
         {
-            PayPrepareViewModel payPrepareViewModel = new PayPrepareViewModel(cart);
             if (!Navigation.NavigationStack.Contains(payPreparePage))
             {
-               await Navigation.PushAsync(payPreparePage = new PayPreparePage(payPrepareViewModel));
+               await Navigation.PushAsync(payPreparePage = new PayPreparePage(cart));
             }
         }
         public void OnDelete(object sender, EventArgs e)

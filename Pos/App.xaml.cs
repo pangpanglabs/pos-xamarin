@@ -21,7 +21,7 @@ namespace Pos
 
             DependencyService.Register<PosSDK>();
             Current.Resources = new ResourceDictionary();
-            Current.Resources.Add("Locator", new ViewModelLocator());
+            //Current.Resources.Add("Locator", new ViewModelLocator());
 
             SetMainPage();
         }

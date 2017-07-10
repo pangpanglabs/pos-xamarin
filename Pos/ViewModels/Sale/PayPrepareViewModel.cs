@@ -11,9 +11,9 @@ namespace Pos.ViewModels.Sale
     public class PayPrepareViewModel : BaseViewModel
     {
         public INavigation Navigation { get; set; }
-        public PayPrepareViewModel(Cart cart)
+        public PayPrepareViewModel()
         {
-            CurrentCart = cart;
+            //CurrentCart = cart;
             MessagingCenter.Subscribe<Cart>(this, "PaymentStart", async (s) =>
             {
                     CurrentCart = s;
@@ -33,29 +33,23 @@ namespace Pos.ViewModels.Sale
             get { return currentCart; }
             set { currentCart = value; OnPropertyChanged(); }
         }
-
+        decimal payAmt;
         public decimal PayAmt
         {
-            get
-            {
-                return CurrentCart.Payments.Sum(o => o.Amount);
-            }
+            get { return payAmt; }
+            set { payAmt = value; OnPropertyChanged(); }
         }
-
+        decimal remainAmt;
         public decimal RemainAmt
         {
-            get
-            {
-                return CurrentCart.RemainAmount;
-            }
+            get { return remainAmt; }
+            set { remainAmt = value; OnPropertyChanged(); }
         }
-
+        ObservableCollection<PaymentInfo> paymentInfos;
         public ObservableCollection<PaymentInfo> PaymentInfos
         {
-            get
-            {
-                return new ObservableCollection<PaymentInfo>(CurrentCart.Payments);
-            }
+            get { return paymentInfos; }
+            set { paymentInfos = value; OnPropertyChanged(); }
         }
 
         public string CartId
