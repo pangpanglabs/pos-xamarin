@@ -14,7 +14,6 @@ namespace Pos.ViewModels.Sale
     {
         public ICommand searchProductCommand { get; }
         public Command LoginCmd { get; }
-        public Command GoToCartPage { get; }
         public ObservableRangeCollection<Sku> Contents { get; set; }
         public Cart currentCart { get; set; }
         Sku currentContent { get; set; }

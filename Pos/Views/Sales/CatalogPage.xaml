@@ -17,7 +17,7 @@
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="登陆" Command="{Binding LoginCmd}" HorizontalOptions="StartAndExpand"></Button>
-                <Button Text="跳转到购物车" Command="{Binding GoToCartPage}" HorizontalOptions="EndAndExpand"></Button>
+                <Button Text="跳转到购物车" Clicked="GoToCartPage" HorizontalOptions="EndAndExpand"></Button>
             </StackLayout>
             <StackLayout>
                 <ListView x:Name="productListView"

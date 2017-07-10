@@ -15,6 +15,7 @@ namespace Pos.Views.Sales
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CatalogPage : ContentPage
 	{
+        public Cart newCart { get; set; }
         public CatalogPage ()
 		{
 			InitializeComponent ();
@@ -24,7 +25,7 @@ namespace Pos.Views.Sales
         {
             MessagingCenter.Subscribe<Cart>(this, "NewCart", (sender) =>
             {
-                string i = "刷新购物车";
+                newCart = sender;
             });
             base.OnAppearing();
         }
@@ -35,7 +36,11 @@ namespace Pos.Views.Sales
             base.OnDisappearing();
         }
 
-
-
+        public void GoToCartPage(object sender,EventArgs e) {
+            if (newCart == null) {
+                return;
+            }
+            Navigation.PushAsync(new CartPage(newCart));
+        }
     }
 }
