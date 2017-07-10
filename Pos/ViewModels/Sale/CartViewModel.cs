@@ -1,4 +1,5 @@
-﻿using Pos.Models;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pos.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Pos.ViewModels.Sale
         {
             MessagingCenter.Subscribe<Cart>(this, "SendCart", (c) => {
                 CurrentCart = c;
-                CartItems =new ObservableRangeCollection<CartItem>( c.Items);
+                CartItems =new ObservableRangeCollection<CartItem>(c.Items);
             });
             MessagingCenter.Subscribe<CartItem>(this, "DeletecartItem", async (i) => {
                 ApiResult<Cart> cartResult = await PosSDK.CallAPI<Cart>("/cart/remove-item", new
@@ -26,24 +27,31 @@ namespace Pos.ViewModels.Sale
                     MessagingCenter.Send<Cart>(CurrentCart, "ChangeCart");
                 }
             });
+
+            Messenger.Default.Register<string>(this, "OrderPayComplete", m =>
+            {
+                CurrentCart = null;
+                CartItems = null;
+                SelectedItem = null;
+            });
         }
         Cart currentCart;
         public Cart CurrentCart
         {
             get { return currentCart; }
-            set { currentCart = value; OnPropertyChanged(); }
+            set { Set(() => CurrentCart, ref currentCart, value); }
         }
         ObservableRangeCollection<CartItem> cartItems;
         public ObservableRangeCollection<CartItem> CartItems
         {
             get { return cartItems; }
-            set { cartItems = value; OnPropertyChanged(); }
+            set { Set(() => CartItems, ref cartItems, value); }
         }
         CartItem selectedItem;
         public CartItem SelectedItem
         {
             get { return selectedItem; }
-            set { selectedItem = value; OnPropertyChanged(); }
+            set { Set(() => SelectedItem, ref selectedItem, value); }
         }
     }
 }

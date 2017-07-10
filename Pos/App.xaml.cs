@@ -20,7 +20,7 @@ namespace Pos
             ViewModelLocator = new ViewModelLocator();
 
             DependencyService.Register<PosSDK>();
-            Current.Resources = new ResourceDictionary();
+            //Current.Resources = new ResourceDictionary();
             //Current.Resources.Add("Locator", new ViewModelLocator());
 
             SetMainPage();
@@ -28,38 +28,39 @@ namespace Pos
 
         public static void SetMainPage()
         {
-            //if (!Settings.IsLoggedIn)
-            //{
-            //    Current.MainPage = new NavigationPage(new LoginPage())
-            //    {
-            //        BarBackgroundColor = (Color)Current.Resources["Primary"],
-            //        BarTextColor = Color.White
-            //    };
-            //}
-            //else
-            //{
-            //    GoToMainPage();
-            //}
-            Current.MainPage = new IndexPage();
+            if (!Settings.IsLoggedIn)
+            {
+                Current.MainPage = new NavigationPage(new LoginPage())
+                {
+                    BarBackgroundColor = (Color)Current.Resources["Primary"],
+                    BarTextColor = Color.White
+                };
+            }
+            else
+            {
+                GoToMainPage();
+            }
+            //Current.MainPage = new IndexPage();
         }
 
         public static void GoToMainPage()
         {
-            Current.MainPage = new TabbedPage
-            {
-                Children = {
-                    new NavigationPage(new ContentsPage())
-                    {
-                        Title = "Catalog",
-                        Icon = Device.OnPlatform("tab_feed.png", null, null)
-                    },
-                    new NavigationPage(new AboutPage())
-                    {
-                        Title = "About",
-                        Icon = Device.OnPlatform("tab_about.png", null, null)
-                    },
-                }
-            };
+            Current.MainPage = new IndexPage();
+            //Current.MainPage = new TabbedPage
+            //{
+            //    Children = {
+            //        new NavigationPage(new ContentsPage())
+            //        {
+            //            Title = "Catalog",
+            //            Icon = Device.OnPlatform("tab_feed.png", null, null)
+            //        },
+            //        new NavigationPage(new AboutPage())
+            //        {
+            //            Title = "About",
+            //            Icon = Device.OnPlatform("tab_about.png", null, null)
+            //        },
+            //    }
+            //};
         }
     }
 }

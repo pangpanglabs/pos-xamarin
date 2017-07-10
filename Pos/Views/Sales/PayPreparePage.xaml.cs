@@ -1,4 +1,5 @@
-﻿using Pos.Models;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pos.Models;
 using Pos.ViewModels.Sale;
 using Pos.ViewModels.Sale.Payment;
 using Pos.Views.Sales.Payment;
@@ -18,7 +19,6 @@ namespace Pos.Views.Sales
     {
         CashPaymentPage _cashPaymentPage;
         HandCradPaymentPage _handCradPaymentPage;
-        PayPrepareViewModel _viewModel;
 
         public PayPreparePage()
         {
@@ -59,9 +59,9 @@ namespace Pos.Views.Sales
             if (!Navigation.NavigationStack.Contains(_handCradPaymentPage))
             {
                 HandCardPaymentViewModel viewModel = new HandCardPaymentViewModel();
-                viewModel.TotalAmt = _viewModel.RemainAmt;
-                viewModel.ReceivedAmt = _viewModel.RemainAmt;
-                viewModel.CartId = _viewModel.CartId;
+                viewModel.TotalAmt = App.ViewModelLocator.PayPrepareViewModel.RemainAmt;
+                viewModel.ReceivedAmt = App.ViewModelLocator.PayPrepareViewModel.RemainAmt;
+                viewModel.CartId = App.ViewModelLocator.PayPrepareViewModel.CartId;
                 Navigation.PushAsync(_handCradPaymentPage = new HandCradPaymentPage(viewModel));
             }
         }
@@ -71,11 +71,29 @@ namespace Pos.Views.Sales
             if (!Navigation.NavigationStack.Contains(_cashPaymentPage))
             {
                 CashPaymentViewModel viewModel = new CashPaymentViewModel();
-                viewModel.TotalAmt = _viewModel.RemainAmt;
-                viewModel.ReceivedAmt = _viewModel.RemainAmt;
-                viewModel.CartId = _viewModel.CartId;
+                viewModel.TotalAmt = App.ViewModelLocator.PayPrepareViewModel.RemainAmt;
+                viewModel.ReceivedAmt = App.ViewModelLocator.PayPrepareViewModel.RemainAmt;
+                viewModel.CartId = App.ViewModelLocator.PayPrepareViewModel.CartId;
                 Navigation.PushAsync(_cashPaymentPage = new CashPaymentPage(viewModel));
             }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (!Navigation.NavigationStack.ToList().Where(s => s.GetType().FullName.Contains("PaymentPage")).Any())
+            {
+                Messenger.Default.Unregister<string>(this, "OrderPayComplete");
+            }
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Messenger.Default.Register<string>(this, "OrderPayComplete", m =>
+            {
+                Navigation.RemovePage(Navigation.NavigationStack.LastOrDefault());
+                App.ViewModelLocator.PayPrepareViewModel.CurrentCart = null;
+            });
         }
     }
 }

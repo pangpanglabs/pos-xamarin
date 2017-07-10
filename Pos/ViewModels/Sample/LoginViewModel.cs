@@ -16,29 +16,41 @@ namespace Pos.ViewModels
 		public string Message
 		{
 			get { return message; }
-			set { message = value; OnPropertyChanged(); }
-		}
+			set
+            {
+                Set(() => Message, ref message, value);
+            }
+        }
 
 		string tenant = string.Empty;
 		public string Tenant
 		{
 			get { return tenant; }
-			set { tenant = value; OnPropertyChanged(); }
-		}
+			set
+            {
+                Set(() => Tenant, ref tenant, value);
+            }
+        }
 
 		string username = string.Empty;
 		public string Username
 		{
 			get { return username; }
-			set { username = value; OnPropertyChanged(); }
-		}
+			set
+            {
+                Set(() => Username, ref username, value);
+            }
+        }
 
 		string password = string.Empty;
 		public string Password
 		{
 			get { return password; }
-			set { password = value; OnPropertyChanged(); }
-		}
+			set
+            {
+                Set(() => Password, ref password, value);
+            }
+        }
 
 		public ICommand SignInCommand { get; }
 
