@@ -1,9 +1,10 @@
-﻿using Pos.Services;
+﻿using GalaSoft.MvvmLight;
+using Pos.Services;
 using Xamarin.Forms;
 
 namespace Pos
 {
-    public class BaseViewModel : ObservableObject
+    public class BaseViewModel : ViewModelBase
     {
         /// <summary>
         /// Get the azure service instance
@@ -14,7 +15,7 @@ namespace Pos
         public bool IsBusy
         {
             get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
+            set { Set(ref isBusy, value); }
         }
         /// <summary>
         /// Private backing field to hold the title
@@ -26,7 +27,7 @@ namespace Pos
         public string Title
         {
             get { return title; }
-            set { SetProperty(ref title, value); }
+            set { Set(ref title, value); }
         }
     }
 }

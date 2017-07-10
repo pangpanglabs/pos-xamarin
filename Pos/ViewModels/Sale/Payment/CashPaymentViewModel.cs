@@ -52,8 +52,7 @@ namespace Pos.ViewModels.Sale.Payment
 
             set
             {
-                _totalAmt = value;
-                OnPropertyChanged();
+                Set(() => TotalAmt, ref _totalAmt, value);
             }
         }
 
@@ -66,8 +65,8 @@ namespace Pos.ViewModels.Sale.Payment
             }
             set
             {
-                _changeAmt = value;
-                OnPropertyChanged();
+                Set(() => ChangeAmt, ref _changeAmt, value);
+
             }
         }
 
@@ -80,8 +79,7 @@ namespace Pos.ViewModels.Sale.Payment
             }
             set
             {
-                _receivedAmt = value;
-                OnPropertyChanged();
+                Set(() => ReceivedAmt, ref _receivedAmt, value);
                 ChangeAmt = _receivedAmt - _totalAmt < 0 ? 0 : _receivedAmt - _totalAmt;
             }
         }

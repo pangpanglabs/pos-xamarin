@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Pos.ViewModels.Sale
 {
@@ -16,14 +17,18 @@ namespace Pos.ViewModels.Sale
             //CurrentCart = cart;
             MessagingCenter.Subscribe<Cart>(this, "PaymentStart", async (s) =>
             {
-                    CurrentCart = s;
-                    if (RemainAmt == 0)
+                CurrentCart = s;
+                if (RemainAmt == 0)
+                {
+                    var result = await PosSDK.CallAPI<Cart>("/order/place-order", new
                     {
-                        await PosSDK.CallAPI<Cart>("/order/place-order", new
-                        {
-                            cartId = this.CartId
-                        });
+                        cartId = this.CartId
+                    });
+                    if (result.Success == true)
+                    {
+                        Messenger.Default.Send<string>(string.Empty,"OrderPayComplete");
                     }
+                }
             });
         }
 
@@ -31,25 +36,49 @@ namespace Pos.ViewModels.Sale
         public Cart CurrentCart
         {
             get { return currentCart; }
-            set { currentCart = value; OnPropertyChanged(); }
+            set
+            {
+                Set(() => CurrentCart, ref currentCart, value);
+                if (value != null)
+                {
+                    RemainAmt = currentCart.RemainAmount;
+                    PaymentInfos = new ObservableCollection<PaymentInfo>(currentCart.Payments ?? new List<PaymentInfo>());
+                    PayAmt = currentCart.Payments == null ? 0 : currentCart.Payments.Sum(s => s.Amount);
+                }
+                else
+                {
+                    RemainAmt = 0;
+                    PaymentInfos = new ObservableCollection<PaymentInfo>(new List<PaymentInfo>());
+                    PayAmt = 0;
+                }
+            }
         }
         decimal payAmt;
         public decimal PayAmt
         {
             get { return payAmt; }
-            set { payAmt = value; OnPropertyChanged(); }
+            set
+            {
+                Set(() => PayAmt, ref payAmt, value);
+            }
         }
         decimal remainAmt;
         public decimal RemainAmt
         {
             get { return remainAmt; }
-            set { remainAmt = value; OnPropertyChanged(); }
+            set
+            {
+                Set(() => RemainAmt, ref remainAmt, value);
+            }
         }
         ObservableCollection<PaymentInfo> paymentInfos;
         public ObservableCollection<PaymentInfo> PaymentInfos
         {
             get { return paymentInfos; }
-            set { paymentInfos = value; OnPropertyChanged(); }
+            set
+            {
+                Set(() => PaymentInfos, ref paymentInfos, value);
+            }
         }
 
         public string CartId

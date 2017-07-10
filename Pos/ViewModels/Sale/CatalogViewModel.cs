@@ -1,4 +1,5 @@
-﻿using Pos.Models;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pos.Models;
 using Pos.Views.Sales;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using GalaSoft.MvvmLight;
 
 namespace Pos.ViewModels.Sale
 {
@@ -26,6 +28,13 @@ namespace Pos.ViewModels.Sale
             Contents = new ObservableRangeCollection<Sku>();
             searchProductCommand = new Command(async () => await ExecuteLoadItemsCommand());
             LoginCmd = new Command(async () => await SignIn());
+
+            Messenger.Default.Register<string>(this, "OrderPayComplete", m =>
+            {
+                Contents = new ObservableRangeCollection<Sku>(); 
+                currentCart = null;
+                RaisePropertyChanged(() => Contents);
+            });
         }
 
         public Sku CurrentContent
@@ -74,7 +83,7 @@ namespace Pos.ViewModels.Sale
             var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
             currentCart = result.Result;
 
-            AddContentToCart(item);
+            await AddContentToCart(item);
             currentCart = result.Result;
             MessagingCenter.Send<Cart>(currentCart, "NewCart");
         }
