@@ -15,6 +15,7 @@ namespace Pos.Views.Sales
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CatalogPage : ContentPage
 	{
+        CartPage CartPage = null;
         public Cart newCart { get; set; }
         public CatalogPage ()
 		{
@@ -37,10 +38,13 @@ namespace Pos.Views.Sales
         }
 
         public void GoToCartPage(object sender,EventArgs e) {
-            if (newCart == null) {
+            if (newCart == null || newCart.Quantity.Equals(0)) {
                 return;
             }
-            Navigation.PushAsync(new CartPage(newCart));
+            if (!Navigation.NavigationStack.Contains(CartPage))
+            {
+                Navigation.PushAsync(new CartPage(newCart));
+            }
         }
     }
 }

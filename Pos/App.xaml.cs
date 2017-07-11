@@ -28,19 +28,19 @@ namespace Pos
 
         public static void SetMainPage()
         {
-            if (!Settings.IsLoggedIn)
-            {
-                Current.MainPage = new NavigationPage(new LoginPage())
-                {
-                    BarBackgroundColor = (Color)Current.Resources["Primary"],
-                    BarTextColor = Color.White
-                };
-            }
-            else
-            {
-                GoToMainPage();
-            }
-            //Current.MainPage = new IndexPage();
+            //if (!Settings.IsLoggedIn)
+            //{
+            //    Current.MainPage = new NavigationPage(new LoginPage())
+            //    {
+            //        BarBackgroundColor = (Color)Current.Resources["Primary"],
+            //        BarTextColor = Color.White
+            //    };
+            //}
+            //else
+            //{
+            //    GoToMainPage();
+            //}
+            Current.MainPage = new IndexPage();
         }
 
         public static void GoToMainPage()

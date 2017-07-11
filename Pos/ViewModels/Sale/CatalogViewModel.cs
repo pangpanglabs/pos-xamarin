@@ -16,12 +16,47 @@ namespace Pos.ViewModels.Sale
     {
         public ICommand searchProductCommand { get; }
         public Command LoginCmd { get; }
-        public ObservableRangeCollection<Sku> Contents { get; set; }
-        public Cart currentCart { get; set; }
-        Sku currentContent { get; set; }
+        Cart currentCart;
+        public Cart CurrentCart {
+            get {
+                return currentCart;
+            }
+            set {
+                Set(() => CurrentCart, ref currentCart, value);
+                RaisePropertyChanged(() => SubTotalAndQty);
+            }
+        }
+        Sku currentContent;
 
-        public string SubTotalAndQty = "1";
+        ObservableRangeCollection<Sku> contents;
+        public ObservableRangeCollection<Sku> Contents
+        {
+            get { return contents; }
+            set
+            {
+                Set(() => Contents, ref contents, value);
+            }
+        }
 
+        string searchText;
+        public string SearchText {
+            get { return searchText; }
+            set {
+                Set(() => SearchText, ref searchText, value);
+            }
+        }
+
+        string subTotalAndQty ;
+        public string SubTotalAndQty {
+            get
+            {
+                if (currentCart == null)
+                {
+                    return "  总金额： " + Convert.ToDecimal(0).ToString() + "  数量： " + "0";
+                }
+                return currentCart.SalePrice.ToString() + "  数量： " + currentCart.Quantity.ToString();
+            }
+        }
 
         public CatalogViewModel()
         {
@@ -33,7 +68,9 @@ namespace Pos.ViewModels.Sale
             {
                 Contents = new ObservableRangeCollection<Sku>(); 
                 currentCart = null;
+                SearchText = "";
                 RaisePropertyChanged(() => Contents);
+                RaisePropertyChanged(() => SubTotalAndQty);
             });
         }
 
@@ -53,6 +90,8 @@ namespace Pos.ViewModels.Sale
                 {
                     CreateNewCart((Sku)value);
                 }
+                //RaisePropertyChanged(() => CurrentCart);
+                //RaisePropertyChanged(() => SubTotalAndQty);
             }
         }
 
@@ -82,22 +121,29 @@ namespace Pos.ViewModels.Sale
         {
             var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
             currentCart = result.Result;
+            MessagingCenter.Send<Cart>(currentCart, "NewCart");
 
             await AddContentToCart(item);
-            currentCart = result.Result;
-            MessagingCenter.Send<Cart>(currentCart, "NewCart");
         }
 
         async Task AddContentToCart(Sku item)
         {
-            var result = await PosSDK.CallAPI<Cart>("/cart/add-item", new
+            try
             {
-                cartId = currentCart.Id,
-                skuId = item.Id,
-                quantity = 1
-            });
-            currentCart = result.Result;
-            MessagingCenter.Send<Cart>(currentCart, "NewCart");
+                var result = await PosSDK.CallAPI<Cart>("/cart/add-item", new
+                {
+                    cartId = currentCart.Id,
+                    skuId = item.Id,
+                    quantity = 1
+                });
+                currentCart = result.Result;
+                RaisePropertyChanged(() => CurrentCart);
+                RaisePropertyChanged(() => SubTotalAndQty);
+                MessagingCenter.Send<Cart>(currentCart, "NewCart");
+            }
+            catch (Exception e) {
+                throw (e);
+            }
         }
 
         async Task RemoveContentFromCart(Sku item)
