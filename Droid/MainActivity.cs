@@ -10,6 +10,7 @@ using Android.OS;
 using GalaSoft.MvvmLight.Ioc;
 using Pos.Services;
 using Pos.Droid.Helpers;
+using Acr.UserDialogs;
 
 namespace Pos.Droid
 {
@@ -31,6 +32,7 @@ namespace Pos.Droid
             App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
 
             SimpleIoc.Default.Register<IUserDialogService, UserDialogHelper_Droid>();
+            UserDialogs.Init(this);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using GalaSoft.MvvmLight;
+using Pos.Services;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace Pos.ViewModels.Sale
 {
@@ -16,6 +18,8 @@ namespace Pos.ViewModels.Sale
     {
         public ICommand searchProductCommand { get; }
         public Command LoginCmd { get; }
+
+        public IUserDialogService UserDialogService;
         Cart currentCart;
         public Cart CurrentCart {
             get {
@@ -72,6 +76,7 @@ namespace Pos.ViewModels.Sale
                 RaisePropertyChanged(() => Contents);
                 RaisePropertyChanged(() => SubTotalAndQty);
             });
+            UserDialogService = SimpleIoc.Default.GetInstance<IUserDialogService>();
         }
 
         public Sku CurrentContent
@@ -100,8 +105,11 @@ namespace Pos.ViewModels.Sale
 
             try
             {
+                UserDialogService.ShowLoading("查询中");
                 Contents.Clear();
-                var result = await PosSDK.CallAPI<ListResult<Sku>>("/catalog/search-skus");
+                var result = await PosSDK.CallAPI<ListResult<Sku>>("/catalog/search-skus", new {
+                    q = SearchText
+                });
                 Contents.ReplaceRange(result.Result.Items);
             }
             catch (Exception ex)
@@ -113,6 +121,9 @@ namespace Pos.ViewModels.Sale
                     Message = "Unable to load items.",
                     Cancel = "OK"
                 }, "message");
+            }
+            finally {
+                UserDialogService.HideLoading();
             }
 
         }
@@ -130,6 +141,7 @@ namespace Pos.ViewModels.Sale
         {
             try
             {
+                UserDialogService.ShowLoading("正在添加商品");
                 var result = await PosSDK.CallAPI<Cart>("/cart/add-item", new
                 {
                     cartId = currentCart.Id,
@@ -141,8 +153,12 @@ namespace Pos.ViewModels.Sale
                 RaisePropertyChanged(() => SubTotalAndQty);
                 MessagingCenter.Send<Cart>(currentCart, "NewCart");
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 throw (e);
+            }
+            finally {
+                UserDialogService.HideLoading();
             }
         }
 
