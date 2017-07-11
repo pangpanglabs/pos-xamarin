@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Pos.Models;
+using ModernHttpClient;
 
 namespace Pos.Services
 {
@@ -16,9 +17,9 @@ namespace Pos.Services
 
 		public PosSDK()
 		{
-			client = new HttpClient();
+			client = new HttpClient(new NativeMessageHandler());
             client.Timeout = TimeSpan.FromSeconds(10);
-			client.BaseAddress = new Uri("http://staging.p2shop.cn:81/");
+			client.BaseAddress = new Uri("https://staging.p2shop.cn/");
 		}
 
         public async Task<ApiResult<T>> CallAPI<T>(string path, dynamic param = null)

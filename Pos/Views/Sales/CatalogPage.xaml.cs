@@ -12,13 +12,13 @@ using Pos.ViewModels.Sale;
 
 namespace Pos.Views.Sales
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CatalogPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CatalogPage : ContentPage
+    {
         CartPage CartPage = null;
-        public CatalogPage ()
-		{
-			InitializeComponent ();
+        public CatalogPage()
+        {
+            InitializeComponent();
             BindingContext = App.ViewModelLocator.CatalogViewModel;
         }
 
@@ -32,15 +32,26 @@ namespace Pos.Views.Sales
             base.OnDisappearing();
         }
 
-        public void GoToCartPage(object sender,EventArgs e) {
+        public void GoToCartPage(object sender, EventArgs e)
+        {
 
-            if (App.ViewModelLocator.CatalogViewModel.CurrentCart == null || App.ViewModelLocator.CatalogViewModel.CurrentCart.Quantity.Equals(0)) {
+            if (App.ViewModelLocator.CatalogViewModel.CurrentCart == null || App.ViewModelLocator.CatalogViewModel.CurrentCart.Quantity.Equals(0))
+            {
                 return;
             }
             if (!Navigation.NavigationStack.Contains(CartPage))
             {
                 Navigation.PushAsync(new CartPage(App.ViewModelLocator.CatalogViewModel.CurrentCart));
             }
+        }
+
+        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+            {
+                return;
+            }
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }
