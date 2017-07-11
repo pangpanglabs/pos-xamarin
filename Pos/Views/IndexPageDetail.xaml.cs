@@ -20,6 +20,18 @@ namespace Pos.Views
             InitGrid();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.MasterDetailPage.IsGestureEnabled = true;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            App.MasterDetailPage.IsGestureEnabled = false;
+        }
+
         private void InitGrid()
         {
             //ToBe:menuCount=接口返回的值
@@ -102,21 +114,6 @@ namespace Pos.Views
             {
                 if (i % 3 == 0)
                 {
-                    stack.BackgroundColor = Color.FromRgb(201, 199, 157);
-                }
-                else if (i % 3 == 1)
-                {
-                    stack.BackgroundColor = Color.FromRgb(78, 140, 168);
-                }
-                else if (i % 3 == 2)
-                {
-                    stack.BackgroundColor = Color.FromRgb(118, 175, 175);
-                }
-            }
-            else if (i > 3 && i <= 5)
-            {
-                if (i % 3 == 0)
-                {
                     stack.BackgroundColor = Color.FromRgb(78, 140, 168);
                 }
                 else if (i % 3 == 1)
@@ -126,6 +123,21 @@ namespace Pos.Views
                 else if (i % 3 == 2)
                 {
                     stack.BackgroundColor = Color.FromRgb(189, 148, 142);
+                }
+            }
+            else if (i > 3 && i <= 5)
+            {
+                if (i % 3 == 0)
+                {
+                    stack.BackgroundColor = Color.FromRgb(201, 199, 157);
+                }
+                else if (i % 3 == 1)
+                {
+                    stack.BackgroundColor = Color.FromRgb(78, 140, 168);
+                }
+                else if (i % 3 == 2)
+                {
+                    stack.BackgroundColor = Color.FromRgb(118, 175, 175);
                 }
             }
             else if (i > 5 && i <= 8)

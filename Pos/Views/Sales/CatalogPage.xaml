@@ -21,7 +21,7 @@
                   Source="cartIcon.png"
                   FontSize="Large"
                   FontAttributes="Bold"
-                  BackgroundColor = "#42947D"
+                  BackgroundColor = "#4E8CA8"
                   TextColor="White"
                   BorderRadius="0"
                   Clicked="GoToCartPage"

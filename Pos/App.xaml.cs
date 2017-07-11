@@ -12,13 +12,14 @@ namespace Pos
         public static int ScreenHeight { get; set; }
 
         public static ViewModelLocator ViewModelLocator;
+        public static MasterDetailPage MasterDetailPage;
 
         public App()
         {
             InitializeComponent();
 
             ViewModelLocator = new ViewModelLocator();
-
+            MasterDetailPage = new IndexPage();
             DependencyService.Register<PosSDK>();
             //Current.Resources = new ResourceDictionary();
             //Current.Resources.Add("Locator", new ViewModelLocator());
@@ -28,24 +29,24 @@ namespace Pos
 
         public static void SetMainPage()
         {
-            //if (!Settings.IsLoggedIn)
-            //{
-            //    Current.MainPage = new NavigationPage(new LoginPage())
-            //    {
-            //        BarBackgroundColor = (Color)Current.Resources["Primary"],
-            //        BarTextColor = Color.White
-            //    };
-            //}
-            //else
-            //{
-            //    GoToMainPage();
-            //}
-            Current.MainPage = new IndexPage();
+            if (!Settings.IsLoggedIn)
+            {
+                Current.MainPage = new NavigationPage(new LoginPage())
+                {
+                    BarBackgroundColor = (Color)Current.Resources["Primary"],
+                    BarTextColor = Color.White
+                };
+            }
+            else
+            {
+                GoToMainPage();
+            }
+            //Current.MainPage = MasterDetailPage;
         }
 
         public static void GoToMainPage()
         {
-            Current.MainPage = new IndexPage();
+            Current.MainPage = MasterDetailPage;
             //Current.MainPage = new TabbedPage
             //{
             //    Children = {
