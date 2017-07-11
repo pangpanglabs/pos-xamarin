@@ -31,20 +31,24 @@ namespace Pos.Views
             switch (item.Code)
             {
                 case "home":
-                    page = (Page)Activator.CreateInstance(typeof(IndexPageDetail));
+                    page = new IndexPageDetail();
                     break;
                 case "sale":
-                    page = (Page)Activator.CreateInstance(typeof(CatalogPage));
+                    page = new CatalogPage();
                     break;
                 case "return":
-                    page = (Page)Activator.CreateInstance(typeof(ReturnOrderSearchPage));
+                    page = new ReturnOrderSearchPage();
                     break;
                 default:
                     break;
             }
-            Detail = new NavigationPage(page);
-            IsPresented = false;
 
+            if(!Detail.Navigation.NavigationStack.Any(p => p.GetType() == page.GetType()))
+            {
+                Detail.Navigation.PushAsync(page);
+            }
+            IsPresented = false;
+            IsGestureEnabled = false;
             MasterPage.ListView.SelectedItem = null;
         }
     }

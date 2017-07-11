@@ -50,7 +50,6 @@ namespace Pos.ViewModels.Sale
             }
         }
 
-        string subTotalAndQty ;
         public string SubTotalAndQty {
             get
             {
@@ -71,7 +70,7 @@ namespace Pos.ViewModels.Sale
             Messenger.Default.Register<string>(this, "OrderPayComplete", m =>
             {
                 Contents = new ObservableRangeCollection<Sku>(); 
-                currentCart = null;
+                CurrentCart = null;
                 SearchText = "";
                 RaisePropertyChanged(() => Contents);
                 RaisePropertyChanged(() => SubTotalAndQty);
@@ -87,16 +86,18 @@ namespace Pos.ViewModels.Sale
             }
             set
             {
-                if (CurrentCart != null)
+                Set(() => CurrentContent, ref currentContent, value);
+                if (value != null)
                 {
-                    AddContentToCart((Sku)value);
+                    if (CurrentCart != null)
+                    {
+                        AddContentToCart((Sku)value).Wait();
+                    }
+                    else
+                    {
+                        CreateNewCart((Sku)value).Wait();
+                    }
                 }
-                else
-                {
-                    CreateNewCart((Sku)value);
-                }
-                //RaisePropertyChanged(() => CurrentCart);
-                //RaisePropertyChanged(() => SubTotalAndQty);
             }
         }
 
