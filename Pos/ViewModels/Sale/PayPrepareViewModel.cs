@@ -6,13 +6,14 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using GalaSoft.MvvmLight.Messaging;
+using Pos.Services;
 
 namespace Pos.ViewModels.Sale
 {
     public class PayPrepareViewModel : BaseViewModel
     {
         public INavigation Navigation { get; set; }
-        public PayPrepareViewModel()
+        public PayPrepareViewModel(IUserDialogService dialogService)
         {
             //CurrentCart = cart;
             MessagingCenter.Subscribe<Cart>(this, "PaymentStart", async (s) =>
@@ -20,13 +21,24 @@ namespace Pos.ViewModels.Sale
                 CurrentCart = s;
                 if (RemainAmt == 0)
                 {
-                    var result = await PosSDK.CallAPI<Cart>("/order/place-order", new
+                    dialogService.ShowLoading("保存销售中");
+                    try
                     {
-                        cartId = this.CartId
-                    });
-                    if (result.Success == true)
+                        var result = await PosSDK.CallAPI<Cart>("/order/place-order", new
+                        {
+                            cartId = this.CartId
+                        });
+                        if (result.Success == true)
+                        {
+                            Messenger.Default.Send<string>(string.Empty, "OrderPayComplete");
+                        }
+                    }
+                    catch (Exception)
                     {
-                        Messenger.Default.Send<string>(string.Empty,"OrderPayComplete");
+
+                    }
+                    finally {
+                        dialogService.HideLoading();
                     }
                 }
             });
