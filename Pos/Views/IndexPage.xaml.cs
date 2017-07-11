@@ -42,13 +42,11 @@ namespace Pos.Views
                 default:
                     break;
             }
-
-            if(!Detail.Navigation.NavigationStack.Any(p => p.GetType() == page.GetType()))
+            if (!Detail.Navigation.NavigationStack.Any(p => p.GetType() == page.GetType()))
             {
                 Detail.Navigation.PushAsync(page);
             }
             IsPresented = false;
-            IsGestureEnabled = false;
             MasterPage.ListView.SelectedItem = null;
         }
     }
