@@ -1,12 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Pos.ViewModels.Sale" Title="Catelog"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" Title="Catelog"
              xmlns:control="clr-namespace:Pos.Controls"
              x:Class="Pos.Views.Sales.CatalogPage">
-    <ContentPage.BindingContext>
-        <vm:CatalogViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="5">
             <StackLayout Orientation="Horizontal" >

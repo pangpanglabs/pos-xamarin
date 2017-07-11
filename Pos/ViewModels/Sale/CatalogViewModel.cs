@@ -87,7 +87,7 @@ namespace Pos.ViewModels.Sale
             }
             set
             {
-                if (currentCart != null)
+                if (CurrentCart != null)
                 {
                     AddContentToCart((Sku)value);
                 }
@@ -131,7 +131,7 @@ namespace Pos.ViewModels.Sale
         async Task CreateNewCart(Sku item)
         {
             var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
-            currentCart = result.Result;
+            CurrentCart = result.Result;
             MessagingCenter.Send<Cart>(currentCart, "NewCart");
 
             await AddContentToCart(item);
@@ -148,10 +148,9 @@ namespace Pos.ViewModels.Sale
                     skuId = item.Id,
                     quantity = 1
                 });
-                currentCart = result.Result;
+                CurrentCart = result.Result;
                 RaisePropertyChanged(() => CurrentCart);
                 RaisePropertyChanged(() => SubTotalAndQty);
-                MessagingCenter.Send<Cart>(currentCart, "NewCart");
             }
             catch (Exception e)
             {
@@ -170,8 +169,7 @@ namespace Pos.ViewModels.Sale
                 skuId = item.Id,
                 quantity = 1
             });
-            currentCart = result.Result;
-            MessagingCenter.Send<Cart>(currentCart, "NewCart");
+            CurrentCart = result.Result;
         }
 
         #region login Area
