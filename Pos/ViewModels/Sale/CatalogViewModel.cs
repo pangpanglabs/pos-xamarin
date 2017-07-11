@@ -21,11 +21,14 @@ namespace Pos.ViewModels.Sale
 
         public IUserDialogService UserDialogService;
         Cart currentCart;
-        public Cart CurrentCart {
-            get {
+        public Cart CurrentCart
+        {
+            get
+            {
                 return currentCart;
             }
-            set {
+            set
+            {
                 Set(() => CurrentCart, ref currentCart, value);
                 RaisePropertyChanged(() => SubTotalAndQty);
             }
@@ -43,21 +46,24 @@ namespace Pos.ViewModels.Sale
         }
 
         string searchText;
-        public string SearchText {
+        public string SearchText
+        {
             get { return searchText; }
-            set {
+            set
+            {
                 Set(() => SearchText, ref searchText, value);
             }
         }
 
-        public string SubTotalAndQty {
+        public string SubTotalAndQty
+        {
             get
             {
                 if (currentCart == null)
                 {
                     return "  总金额： " + Convert.ToDecimal(0).ToString() + "  数量： " + "0";
                 }
-                return currentCart.SalePrice.ToString() + "  数量： " + currentCart.Quantity.ToString();
+                return "  总金额： " + currentCart.SalePrice.ToString() + "  数量： " + currentCart.Quantity.ToString();
             }
         }
 
@@ -69,7 +75,7 @@ namespace Pos.ViewModels.Sale
 
             Messenger.Default.Register<string>(this, "OrderPayComplete", m =>
             {
-                Contents = new ObservableRangeCollection<Sku>(); 
+                Contents = new ObservableRangeCollection<Sku>();
                 CurrentCart = null;
                 SearchText = "";
                 RaisePropertyChanged(() => Contents);
@@ -91,11 +97,13 @@ namespace Pos.ViewModels.Sale
                 {
                     if (CurrentCart != null)
                     {
-                        AddContentToCart((Sku)value).Wait();
+                        AddContentToCart((Sku)value).ContinueWith((d) => { }); ;
                     }
                     else
                     {
-                        CreateNewCart((Sku)value).Wait();
+                        CreateNewCart((Sku)value).ContinueWith(async (d) => {
+                            await AddContentToCart((Sku)value);
+                        });
                     }
                 }
             }
@@ -108,7 +116,8 @@ namespace Pos.ViewModels.Sale
             {
                 UserDialogService.ShowLoading("查询中");
                 Contents.Clear();
-                var result = await PosSDK.CallAPI<ListResult<Sku>>("/catalog/search-skus", new {
+                var result = await PosSDK.CallAPI<ListResult<Sku>>("/catalog/search-skus", new
+                {
                     q = SearchText
                 });
                 Contents.ReplaceRange(result.Result.Items);
@@ -123,7 +132,8 @@ namespace Pos.ViewModels.Sale
                     Cancel = "OK"
                 }, "message");
             }
-            finally {
+            finally
+            {
                 UserDialogService.HideLoading();
             }
 
@@ -131,11 +141,22 @@ namespace Pos.ViewModels.Sale
 
         async Task CreateNewCart(Sku item)
         {
-            var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
-            CurrentCart = result.Result;
-            MessagingCenter.Send<Cart>(currentCart, "NewCart");
+            try
+            {
+                UserDialogService.ShowLoading("生成购物车");
 
-            await AddContentToCart(item);
+                var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
+                CurrentCart = result.Result;
+                MessagingCenter.Send<Cart>(currentCart, "NewCart");
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+            finally
+            {
+                UserDialogService.HideLoading();
+            }
         }
 
         async Task AddContentToCart(Sku item)
@@ -157,7 +178,8 @@ namespace Pos.ViewModels.Sale
             {
                 throw (e);
             }
-            finally {
+            finally
+            {
                 UserDialogService.HideLoading();
             }
         }

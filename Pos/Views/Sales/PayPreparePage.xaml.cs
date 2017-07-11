@@ -89,9 +89,16 @@ namespace Pos.Views.Sales
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            Messenger.Default.Unregister<string>(this, "OrderPayComplete");
             Messenger.Default.Register<string>(this, "OrderPayComplete", m =>
             {
-                Navigation.RemovePage(Navigation.NavigationStack.LastOrDefault());
+                for (int i = 0; i < Navigation.NavigationStack.Count; i++)
+                {
+                    if (i > 1)
+                    {
+                        Navigation.RemovePage(Navigation.NavigationStack[i]);
+                    }
+                }
                 App.ViewModelLocator.PayPrepareViewModel.CurrentCart = null;
             });
         }

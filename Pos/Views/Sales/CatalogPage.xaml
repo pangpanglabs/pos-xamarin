@@ -24,13 +24,16 @@
                   BackgroundColor = "#4E8CA8"
                   TextColor="White"
                   BorderRadius="0"
+                  HeightRequest="50"
                   Clicked="GoToCartPage"
                   HorizontalOptions="FillAndExpand"  
               />
             </StackLayout>
-            <StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand">
                 <ListView x:Name="productListView"
                     ItemsSource="{Binding Contents}"
+                    ItemSelected="OnItemSelected"
+                    RowHeight="70"
                     SelectedItem="{Binding CurrentContent}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
