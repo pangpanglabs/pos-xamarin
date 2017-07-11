@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using GalaSoft.MvvmLight;
+using Pos.Services;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace Pos.ViewModels.Sale
 {
@@ -16,12 +18,49 @@ namespace Pos.ViewModels.Sale
     {
         public ICommand searchProductCommand { get; }
         public Command LoginCmd { get; }
-        public ObservableRangeCollection<Sku> Contents { get; set; }
-        public Cart currentCart { get; set; }
-        Sku currentContent { get; set; }
 
-        public string SubTotalAndQty = "1";
+        public IUserDialogService UserDialogService;
+        Cart currentCart;
+        public Cart CurrentCart {
+            get {
+                return currentCart;
+            }
+            set {
+                Set(() => CurrentCart, ref currentCart, value);
+                RaisePropertyChanged(() => SubTotalAndQty);
+            }
+        }
+        Sku currentContent;
 
+        ObservableRangeCollection<Sku> contents;
+        public ObservableRangeCollection<Sku> Contents
+        {
+            get { return contents; }
+            set
+            {
+                Set(() => Contents, ref contents, value);
+            }
+        }
+
+        string searchText;
+        public string SearchText {
+            get { return searchText; }
+            set {
+                Set(() => SearchText, ref searchText, value);
+            }
+        }
+
+        string subTotalAndQty ;
+        public string SubTotalAndQty {
+            get
+            {
+                if (currentCart == null)
+                {
+                    return "  总金额： " + Convert.ToDecimal(0).ToString() + "  数量： " + "0";
+                }
+                return currentCart.SalePrice.ToString() + "  数量： " + currentCart.Quantity.ToString();
+            }
+        }
 
         public CatalogViewModel()
         {
@@ -33,8 +72,11 @@ namespace Pos.ViewModels.Sale
             {
                 Contents = new ObservableRangeCollection<Sku>(); 
                 currentCart = null;
+                SearchText = "";
                 RaisePropertyChanged(() => Contents);
+                RaisePropertyChanged(() => SubTotalAndQty);
             });
+            UserDialogService = SimpleIoc.Default.GetInstance<IUserDialogService>();
         }
 
         public Sku CurrentContent
@@ -53,6 +95,8 @@ namespace Pos.ViewModels.Sale
                 {
                     CreateNewCart((Sku)value);
                 }
+                //RaisePropertyChanged(() => CurrentCart);
+                //RaisePropertyChanged(() => SubTotalAndQty);
             }
         }
 
@@ -61,8 +105,11 @@ namespace Pos.ViewModels.Sale
 
             try
             {
+                UserDialogService.ShowLoading("查询中");
                 Contents.Clear();
-                var result = await PosSDK.CallAPI<ListResult<Sku>>("/catalog/search-skus");
+                var result = await PosSDK.CallAPI<ListResult<Sku>>("/catalog/search-skus", new {
+                    q = SearchText
+                });
                 Contents.ReplaceRange(result.Result.Items);
             }
             catch (Exception ex)
@@ -75,6 +122,9 @@ namespace Pos.ViewModels.Sale
                     Cancel = "OK"
                 }, "message");
             }
+            finally {
+                UserDialogService.HideLoading();
+            }
 
         }
 
@@ -82,22 +132,34 @@ namespace Pos.ViewModels.Sale
         {
             var result = await PosSDK.CallAPI<Cart>("/cart/create-cart");
             currentCart = result.Result;
+            MessagingCenter.Send<Cart>(currentCart, "NewCart");
 
             await AddContentToCart(item);
-            currentCart = result.Result;
-            MessagingCenter.Send<Cart>(currentCart, "NewCart");
         }
 
         async Task AddContentToCart(Sku item)
         {
-            var result = await PosSDK.CallAPI<Cart>("/cart/add-item", new
+            try
             {
-                cartId = currentCart.Id,
-                skuId = item.Id,
-                quantity = 1
-            });
-            currentCart = result.Result;
-            MessagingCenter.Send<Cart>(currentCart, "NewCart");
+                UserDialogService.ShowLoading("正在添加商品");
+                var result = await PosSDK.CallAPI<Cart>("/cart/add-item", new
+                {
+                    cartId = currentCart.Id,
+                    skuId = item.Id,
+                    quantity = 1
+                });
+                currentCart = result.Result;
+                RaisePropertyChanged(() => CurrentCart);
+                RaisePropertyChanged(() => SubTotalAndQty);
+                MessagingCenter.Send<Cart>(currentCart, "NewCart");
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+            finally {
+                UserDialogService.HideLoading();
+            }
         }
 
         async Task RemoveContentFromCart(Sku item)

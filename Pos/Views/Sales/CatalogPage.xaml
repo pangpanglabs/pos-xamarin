@@ -15,9 +15,22 @@
                      HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" >
                 </SearchBar>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="登陆" Command="{Binding LoginCmd}" HorizontalOptions="StartAndExpand"></Button>
-                <Button Text="跳转到购物车" Clicked="GoToCartPage" HorizontalOptions="EndAndExpand"></Button>
+            <StackLayout Orientation="Vertical">
+                <!--<Button Text="登陆" Command="{Binding LoginCmd}" HorizontalOptions="FillAndExpand"></Button>-->
+                <!--<Button Text="跳转到购物车" Clicked="GoToCartPage" HorizontalOptions="EndAndExpand"></Button>-->
+                <!--<control:ImageButton Source="icon.png" ImageOrientation ="0" Command="GoToCartPage" Resources="{}"></control:ImageButton>-->
+                <control:ImageButton
+                  x:Name="imgbtnPrice"
+                  Text="{Binding SubTotalAndQty}"
+                  Source="cartIcon.png"
+                  FontSize="Large"
+                  FontAttributes="Bold"
+                  BackgroundColor = "#42947D"
+                  TextColor="White"
+                  BorderRadius="0"
+                  Clicked="GoToCartPage"
+                  HorizontalOptions="FillAndExpand"  
+              />
             </StackLayout>
             <StackLayout>
                 <ListView x:Name="productListView"
@@ -31,7 +44,7 @@
                                         <Label Text="{Binding Id}" HorizontalOptions="Start" FontAttributes="Bold"/>
                                         <Label Text="{Binding Code}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
                                         <StackLayout HorizontalOptions="EndAndExpand">
-                                            <Label Text="{Binding SalePrice}" VerticalOptions="Start" HorizontalOptions="End"/>
+                                            <Label Text="{Binding ListPrice}" VerticalOptions="Start" HorizontalOptions="End"/>
                                         </StackLayout>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
