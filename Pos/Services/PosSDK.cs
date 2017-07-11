@@ -17,6 +17,7 @@ namespace Pos.Services
 		public PosSDK()
 		{
 			client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
 			client.BaseAddress = new Uri("http://staging.p2shop.cn:81/");
 		}
 

@@ -161,12 +161,10 @@ namespace Pos.Views
         }
         private void GoSaleReport()
         {
-            throw new NotImplementedException();
         }
 
         private void GoReturn()
         {
-            throw new NotImplementedException();
         }
 
         private void GoSalePage()
