@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessagingCenterAlert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Cart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IUserDialogService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IndexViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CartViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Sale\CatalogViewModel.cs" />
